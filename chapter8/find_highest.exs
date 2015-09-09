@@ -9,12 +9,13 @@ users = %{
   corey:    %{ score:  17  }
 }
 
+highest_scorers = users
+                    |> Enum.reject(&(is_nil(elem(&1, 1).score)))
+                    |> Enum.group_by(&(elem(&1, 1).score))
+                    |> Enum.max_by(&(elem(&1, 0)))
 
-users = Enum.reject users, &(is_nil(elem(&1, 1).score))
-users_by_score = Enum.group_by users, &(elem(&1, 1).score)
-highest_scorers = Enum.max_by users_by_score, &(elem(&1, 0))
 IO.inspect highest_scorers
-
+  
 
 # ===============================================================
 
@@ -34,4 +35,3 @@ IO.inspect highest_scorers
 #end
 
 #IO.inspect %{high_score: high_score, highest_scorers: highest_scorers}
-
